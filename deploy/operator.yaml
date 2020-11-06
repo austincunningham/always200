@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: always200
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: always200
+  template:
+    metadata:
+      labels:
+        name: always200
+    spec:
+      serviceAccountName: always200
+      containers:
+        - name: always200
+          # Replace this with the built image name
+          image: REPLACE_IMAGE
+          command:
+          - always200
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "always200"
