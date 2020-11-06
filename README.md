@@ -25,5 +25,5 @@ Should work with any REST server provided its container is `EXPOSED 8080`
 Change the image in the CR [here](https://github.com/austincunningham/always200/blob/master/deploy/crds/example.com_v1alpha1_always200_cr.yaml#L8)
 
 ## Container Images
-[![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200)
-[![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200-operator/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200-operator)
+- always200 rest container [![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200)
+- always200 operator containter [![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200-operator/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200-operator)
