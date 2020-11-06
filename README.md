@@ -27,3 +27,6 @@ Change the image in the CR [here](https://github.com/austincunningham/always200/
 ## Container Images
 - always200 rest container [![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200)
 - always200 operator containter [![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200-operator/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200-operator)
+
+## TODO
+use `controllerutil.CreateOrUpdate` to watch for changes and update.
