@@ -1,15 +1,19 @@
 const express = require("express");
 const app = express();
 
-app.get('/',(req,res) => {
+const PORT = 8080;
+const HOST = '0.0.0.0';
+
+app.get('/get',(req,res) => {
+    console.log("GET response");
     res.sendStatus(200);
 });
 
-app.post('/',(req,res) => {
-    console.log("do i get here")
+app.post('/post',(req,res) => {
+    console.log("POST response");
     res.sendStatus(200);
 });
 
-app.listen(8080,() => {
-    console.log("Started on PORT 8080");
+app.listen(PORT, HOST, () => {
+    console.log(`Started on http://${HOST}:${PORT}`);
   })
