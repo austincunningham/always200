@@ -189,9 +189,7 @@ func (r ReconcileAlways200) always200Service(cr *examplev1alpha1.Always200) *cor
 				Protocol: corev1.ProtocolTCP,
 				Port: 8080,
 				TargetPort: intstr.FromInt(8080),
-
 			}},
-			Type: corev1.ServiceTypeLoadBalancer,
 		},
 	}
 
@@ -207,6 +205,17 @@ func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *route
 			Name: "always200",
 			Namespace: cr.Namespace,
 			Labels: labels,
+		},
+		Spec: routev1.RouteSpec{
+			To: routev1.RouteTargetReference{
+				Kind:   "Service",
+				Name:   "always200-service",
+			},
+			Port: &routev1.RoutePort{
+				TargetPort: intstr.FromInt(8080),
+			},
+
+
 		},
 	}
 
