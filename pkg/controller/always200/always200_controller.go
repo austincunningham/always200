@@ -139,7 +139,7 @@ func (r *ReconcileAlways200) always200Deployment(cr *examplev1alpha1.Always200) 
 	// Build a Deployment
 	labels := labels(cr, "backend-always200")
     size := cr.Spec.Size
-	always200_deployment := &appsv1.Deployment{
+	always200Deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "always200",
 			Namespace: cr.Namespace,
@@ -169,8 +169,8 @@ func (r *ReconcileAlways200) always200Deployment(cr *examplev1alpha1.Always200) 
 	}
 
 	// sets the this controller as owner
-	controllerutil.SetControllerReference(cr, always200_deployment, r.scheme)
-	return always200_deployment
+	controllerutil.SetControllerReference(cr, always200Deployment, r.scheme)
+	return always200Deployment
 }
 
 // This is the equivalent of creating a service yaml and returning it
@@ -178,7 +178,7 @@ func (r *ReconcileAlways200) always200Deployment(cr *examplev1alpha1.Always200) 
 func (r ReconcileAlways200) always200Service(cr *examplev1alpha1.Always200) *corev1.Service {
 	labels := labels(cr, "backend-always200")
 
-	always200_service := &corev1.Service{
+	always200Service := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:                       "always200-service",
 			Namespace:                  cr.Namespace,
@@ -193,8 +193,8 @@ func (r ReconcileAlways200) always200Service(cr *examplev1alpha1.Always200) *cor
 		},
 	}
 
-	controllerutil.SetControllerReference(cr,always200_service,r.scheme)
-	return always200_service
+	controllerutil.SetControllerReference(cr,always200Service,r.scheme)
+	return always200Service
 }
 
 // This is the equivalent of creating a route yaml file and returning it
@@ -202,7 +202,7 @@ func (r ReconcileAlways200) always200Service(cr *examplev1alpha1.Always200) *cor
 func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *routev1.Route {
 	labels := labels(cr, "backend-always200")
 
-	always200_route := &routev1.Route{
+	always200Route := &routev1.Route{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "always200",
 			Namespace: cr.Namespace,
@@ -221,7 +221,7 @@ func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *route
 		},
 	}
 
-	return always200_route
+	return always200Route
 }
 
 
@@ -236,9 +236,7 @@ func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, ins
 		if err !=nil{
 			log.Error(err, "Failed to create deployment")
 			return err
-		} else {
-			return nil
-		}
+		} 
 	}
 	return nil
 }
@@ -254,9 +252,7 @@ func (r ReconcileAlways200) checkCreateService(request reconcile.Request, instan
 		if err !=nil{
 			log.Error(err, "Failed to create Service")
 			return err
-		} else {
-			return nil
-		}
+		} 
 	}
 	return nil
 }
@@ -272,9 +268,7 @@ func (r ReconcileAlways200) checkCreateRoute(request reconcile.Request, instance
 		if err !=nil{
 			log.Error(err, "Failed to create Route")
 			return err
-		} else {
-			return nil
-		}
+		} 
 	}
 	return nil
 }
