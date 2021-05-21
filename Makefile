@@ -22,3 +22,11 @@ delete:
 run:
 	@operator-sdk run --local --namespace $(NS)
 
+.PHONY: deploy/image
+deploy/image:
+	@oc new-project $(NS)
+	@oc apply -f deploy/role.yaml
+	@oc apply -f deploy/service_account.yaml
+	@oc apply -f deploy/role_binding.yaml
+	@oc apply -f deploy/crds/example.com_always200s_crd.yaml
+	@oc apply -f deploy/operator.yaml

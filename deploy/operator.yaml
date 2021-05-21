@@ -16,7 +16,7 @@ spec:
       containers:
         - name: always200
           # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: quay.io/austincunningham/always200-operator:latest
           command:
           - always200
           imagePullPolicy: Always
