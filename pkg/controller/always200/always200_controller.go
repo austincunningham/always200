@@ -197,6 +197,8 @@ func (r ReconcileAlways200) always200Service(cr *examplev1alpha1.Always200) *cor
 	return always200_service
 }
 
+// This is the equivalent of creating a route yaml file and returning it
+// It doesn't create anything on cluster
 func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *routev1.Route {
 	labels := labels(cr, "backend-always200")
 
@@ -223,7 +225,7 @@ func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *route
 }
 
 
-// check for a deployment if it doesn't exist it creates one
+// check for a deployment if it doesn't exist it creates one on cluster using the deployment created in always200Deployment
 func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, instance *examplev1alpha1.Always200, always200Deployment *appsv1.Deployment) error{
     // check for a deployment in the namespace
 	found := &appsv1.Deployment{}
@@ -241,7 +243,7 @@ func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, ins
 	return nil
 }
 
-// check for a service if it doesn't exist it creates one
+// check for a service if it doesn't exist it creates one on cluster using the service created in always200Service
 func (r ReconcileAlways200) checkCreateService(request reconcile.Request, instance *examplev1alpha1.Always200, always200Servcie *corev1.Service) error{
 	// check for a deployment in the namespace
 	found := &corev1.Service{}
@@ -259,7 +261,7 @@ func (r ReconcileAlways200) checkCreateService(request reconcile.Request, instan
 	return nil
 }
 
-// check for a service if it doesn't exist it creates one
+// check for a route if it doesn't exist it creates one on cluster using the route created in always200Route
 func (r ReconcileAlways200) checkCreateRoute(request reconcile.Request, instance *examplev1alpha1.Always200, always200Route *routev1.Route) error{
 	// check for a deployment in the namespace
 	found := &routev1.Route{}
