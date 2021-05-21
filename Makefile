@@ -20,7 +20,7 @@ delete:
 
 .PHONY: run
 run:
-	@operator-sdk run --local --namespace $(NS)
+	@operator-sdk run local --watch-namespace $(NS)
 
 .PHONY: deploy/image
 deploy/image:

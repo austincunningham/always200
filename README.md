@@ -1,4 +1,9 @@
 # Always200
+
+## Requirements
+operator-sdk : v0.19.0
+
+# Usage
 A node express API used as an example for deploying via the operator-sdk on openshift
 ```bash
 curl http://localhost:8080/get
@@ -7,11 +12,11 @@ curl -d "{data.json"} -X POST http://localhost:8080/post
 ok
 ```
 The operator creates the 
-- Deployment (2 pods)
+- Deployment (will scale up or down to the spec.size specified in the always200 CR)
 - Service 
 - Route
 
-## Usage
+## Deployment
 ```bash
 # deploy the resources
 make deploy
@@ -29,4 +34,4 @@ Change the image in the CR [here](https://github.com/austincunningham/always200/
 - always200 operator containter [![Docker Repository on Quay](https://quay.io/repository/austincunningham/always200-operator/status "Docker Repository on Quay")](https://quay.io/repository/austincunningham/always200-operator)
 
 ## TODO
-use `controllerutil.CreateOrUpdate` to watch for changes and update.
+- Write some unit tests

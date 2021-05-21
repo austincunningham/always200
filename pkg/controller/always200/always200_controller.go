@@ -104,10 +104,19 @@ func (r *ReconcileAlways200) Reconcile(request reconcile.Request) (reconcile.Res
 		return reconcile.Result{}, err
 	}
 
-	err = r.checkCreateDeployment(request, instance, r.always200Deployment(instance))
+	deployment, err := r.checkCreateDeployment (request, instance, r.always200Deployment(instance))
 	if err != nil{
 		return reconcile.Result{}, err
 	}
+
+	// If the spec.size in the CR changes, update the deployment number of replicas
+	if deployment.Spec.Replicas != &instance.Spec.Size {
+		controllerutil.CreateOrUpdate(context.TODO(), r.client, deployment, func() error {
+			deployment.Spec.Replicas = &instance.Spec.Size
+			return nil
+		} )
+	}
+
 	err = r.checkCreateService(request, instance, r.always200Service(instance))
 	if err != nil{
 		return reconcile.Result{}, err
@@ -135,7 +144,7 @@ func labels(cr *examplev1alpha1.Always200, tier string) map[string]string {
 
 // This is the equivalent of creating a deployment yaml and returning it
 // It doesnt create anything on cluster
-func (r *ReconcileAlways200) always200Deployment(cr *examplev1alpha1.Always200) *appsv1.Deployment{
+func (r *ReconcileAlways200) always200Deployment(cr *examplev1alpha1.Always200) (*appsv1.Deployment){
 	// Build a Deployment
 	labels := labels(cr, "backend-always200")
     size := cr.Spec.Size
@@ -226,7 +235,7 @@ func (r ReconcileAlways200) always200Route(cr *examplev1alpha1.Always200) *route
 
 
 // check for a deployment if it doesn't exist it creates one on cluster using the deployment created in always200Deployment
-func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, instance *examplev1alpha1.Always200, always200Deployment *appsv1.Deployment) error{
+func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, instance *examplev1alpha1.Always200, always200Deployment *appsv1.Deployment) (*appsv1.Deployment,error){
     // check for a deployment in the namespace
 	found := &appsv1.Deployment{}
 	err := r.client.Get(context.TODO(), types.NamespacedName{Name:always200Deployment.Name,Namespace: instance.Namespace}, found)
@@ -235,10 +244,10 @@ func (r ReconcileAlways200) checkCreateDeployment(request reconcile.Request, ins
 		err = r.client.Create(context.TODO(), always200Deployment)
 		if err !=nil{
 			log.Error(err, "Failed to create deployment")
-			return err
+			return found, err
 		} 
 	}
-	return nil
+	return found ,nil
 }
 
 // check for a service if it doesn't exist it creates one on cluster using the service created in always200Service
