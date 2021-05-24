@@ -30,3 +30,4 @@ deploy/image:
 	@oc apply -f deploy/role_binding.yaml
 	@oc apply -f deploy/crds/example.com_always200s_crd.yaml
 	@oc apply -f deploy/operator.yaml
+	@oc apply -f deploy/crds/*_cr.yaml

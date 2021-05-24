@@ -17,11 +17,19 @@ The operator creates the
 - Route
 
 ## Deployment
+Run locally
 ```bash
 # deploy the resources
 make deploy
 # run the operator localy 
 make run
+# delete the deployment
+make delete
+```
+Deploy on cluster
+```bash
+# deploy the resources
+make deploy/image
 # delete the deployment
 make delete
 ```
